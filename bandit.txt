@@ -1,0 +1,13 @@
+username 	password(how we find)
+bandit0 - bandit0(given)
+bandit1 - boJ9jbbUNNfktd78OOpsqOltutMc3MY1 (`ls` command there is a file called readme open via using `cat readme`)
+bandit2 - CV1DtqXWVFXTvM2F0k09SHz0YwRINYA9 (`ls` command there is a file called -, these used for argument in linux command so these are open via using `cat ./-`)
+bandit3 - UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK (`ls` command there is a file called spaces in filename, these file read via '' with filename like `cat 'spaces in filename'`)
+bandit4 - pIwrPrtPN36QITSp3EQaw936yaFoFgAB (`ls` command there is a directory called inhere and after `cd inhere` there is a hidden file which can be seen via `ls -la` command, now open via `cat .hidden`)
+bandit5 - koReBOKuIDDepwhWk7jZC0RTdopnAYKh (`ls` command there is a directory called inhere and after `cd inhere` there is multiple file here but only one contain password of next level and other have non readable data which can be seen via command `file ./-filexx`, one file have result like ASCII text, this is the file of password which can be read via `cat ./-filexx`
+
+you can play around with find command first it takes time to work 
+
+bandit6 - DXjZPULLxYr17uwoI01bNLQbtFemEgo7 (`ls` command there is a directory called inhere and after `cd inhere` there is multiple directory, now we need to extract one file which is not executable 1033 bytes and readble so we use find command like `find -type f -size 1033c ! -executable` it return only one result which is readble but very long file we can see its content using `head .filexx`)
+bandit7 - HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs (find a file using given condition like `find -type f -user bandit7 -group bandit6 -size 33c` it give multiple permission denied msg but one of the file isn't and that's the file you can see using `cat path_of_file`)
+bandit8 - cvX2JJa4CFALtqS87jk27qwqGhBM9plV (`ls` command give a file data.txt which is a long file, now according to suggestion we use command `grep` like `cat data.txt | grep millionth`)
