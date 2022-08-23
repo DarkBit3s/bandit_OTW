@@ -15,4 +15,28 @@ bandit9 - UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR (`ls` command give a file data.txt wh
 bandit10 - truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk (`ls` command give a file data.txt which is a long file, now according to suggestion we use strings command to print human readable text from this file and use grep command for extraact password with several '='charecter, our command like `strings data.txt | grep '='`)
 bandit11 - IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR (`ls` command give a file data.txt which is a long file, now according to suggestion this is a base64 encode text now we can decrypt this text using `cat data.txt | base64 -d` command)
 bandit12 - 5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu (here in data.txt file uses ROT13 encoding where each charecter is replaced via the next 13th charecter in sequence, now we can use `tr` command to translate to orignal form like this `cat data.txt | tr '[a-zA-Z]' '[n-za-mN-ZA-M]'`)
-bandit13 - 
+bandit13 - 8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL (make what program want to do first-> mv /tmp/newfile 
+									  second -> cp /home/bandit12/data.txt /tmp/newfile
+									  third -> cat data.txt | xxd -r > data
+									  now check type of file type `file data`
+									 now if you get gzip format rename your file to `mv data data1.gz`  (this decrypt via `gzip -d data1.gz`)
+									     if this is bzip2 format `mv data1 data2.bz`   (this decrypt via `bzip2 -d data2.bz`)
+									 and if it is 'POSIX format' rename it `mv data2 data3.tar`     (this decrypt via `tar -xf data3.tar`)
+									 repeat this until `file data` command woun't give you result like this ASCII text read it via 'cat data'
+bandit14 - 4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e (we have given a ssh private key which we can use to logon to the bandit 14 in localhost and read its password, for this first use `ssh -i sshkey.private bandit14@localhost` you are loged in as bandit14, now we can see the password of the user like `cat /etc/bandit_pass/bandit14`)
+bandit15 - BfMYroe26WYalil77FoDi9qh59eK5xNr (because we have given to connect on port 30000, but we have no password or ssh key to connect so we try some other method to connect to remote server, and this can be done via telnet, we use the command like `telnet localhost 30000` and enter current password of bandit14 we have presented next level password)
+bandit16 - cluFn7wTiGryunymYOu4RcffSxQluehd (now we have to connect using ssl encryption so we use openssl command to connect to server, you can read about it how to connect to server using openssl, but now we use command like `openssl s_client -connect localhost:30001` and enter current user password we get next level password)
+bandit17 - xLYVMN9WE5zQ5vHacb0sZEVqbrp7nBTn (because first we need to find out what are port listen on ssl we use nmap and then openssl on that port like------
+									nmap -A -p31000-32000 localhost (It show 5 port from which one service is ssl/unknown that's the port)
+									now 'openssl s_client -connect localhost@31960' now enter currnet user password
+									This give the ssh private key of next user which we copy from -----BEGIN RSA PRIVATE KEY-----
+ 									to -----END RSA PRIVATE KEY-----, now go to 'cd /tmp' and use 'nano ssh_key' now paste that key here save it with ctrl+o and exit out by ctrl+x, now change permission like `chmod 400 ssh_key`
+									now use ssh ------- 'ssh -i ssh_key bandit17@localhost'--------- read next user password via 'cat /etc/bandit_pass/bandit17')
+bandit18 - kfBf3eYk5BPBRzwjqutbbfE887SVc5Yd (we have to find that line which is changed in the password.new from password.old, we use 'diff' tool to find the diffrence like `diff password.old password.new` and the second line on this is our password which comes from the password.new file, you can also double check by submit this to bandit18 user and it say bye bye) 
+bandit19 - IueksS7Ubh8G3DCwVzrTd8rAVOwq3M5x (because someone has modified .bashrc to log you out when you log in with SSH, so we didn't load the terminal so that we can't logout directly, for that we load another shell in the ssh command, like `ssh bandit.labs.overthewire.org -p 2220 -l bandit18 /bin/sh` enter the password of bandit18 enter ls, their is a file readme, now enter `cat readme')
+------------------------------------Also remind that SSH does not just allows us to log into a machine remotely, but it also allows remote execution of commands by adding the commands after the common SSH expression like `ssh bandit.labs.overthewire.org -p 2220 -l bandit18 cat readme`-----------------------------------
+bandit20 - GbKksEFF4yrVs6il55v6gwY5aVje5f0j (Here we have assign setuid in that file, which is useful for executing the file as bandit20 user within bandit19 group, When the setuid bit is used it does not run with the privileges of the user who launched it, but with that of the file owner instead, so we run like `./bandit20-do cat /etc/bandit_pass/bandit20`)
+bandit21 - gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr (First we have to make a connection with the bandit20 server with netcat using command like "echo -n 'password of bandit20' | nc -l -p 12345 &" this run on background and send the password of bandit20 to server once we connect on the same port using given setuid on 'suconnect', so command is like "suconnect 12345" and you've given next password)   
+ 
+
+
