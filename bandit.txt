@@ -37,12 +37,19 @@ bandit19 - IueksS7Ubh8G3DCwVzrTd8rAVOwq3M5x (because someone has modified .bashr
 ------------------------------------Also remind that SSH does not just allows us to log into a machine remotely, but it also allows remote execution of commands by adding the commands after the common SSH expression like `ssh bandit.labs.overthewire.org -p 2220 -l bandit18 cat readme`-----------------------------------
 bandit20 - GbKksEFF4yrVs6il55v6gwY5aVje5f0j (Here we have assign setuid in that file, which is useful for executing the file as bandit20 user within bandit19 group, When the setuid bit is used it does not run with the privileges of the user who launched it, but with that of the file owner instead, so we run like `./bandit20-do cat /etc/bandit_pass/bandit20`)
 bandit21 - gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr (First we have to make a connection with the bandit20 server with netcat using command like "echo -n 'password of bandit20' | nc -l -p 12345 &" this run on background and send the password of bandit20 to server once we connect on the same port using given setuid on 'suconnect', so command is like "suconnect 12345" and you've given next password)   
+bandit22 - Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI (go to `cd /etc/cron.d/` there is multiple cron jobs are avilable, but for us bandit22 is useful, let read its content `cat cronjob_bandit22`, there is shell script running, let's see what's inside of those, `cat /usr/bin/cronjob_bandit22.sh`, now it changes the /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv permission, let's look on it, what it contain 'cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv', we get next level password)0
+bandit23 - jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n (go to `cd /etc/cron.d/` there is multiple cron jobs are avilable, but for us bandit23 is useful, let read its content `cat cronjob_bandit23`, there is shell script running, let's see what's inside of those, `cat /usr/bin/cronjob_bandit22.sh`, let's break it down-
+									First it take user name from 'whoami' command
+									Then it echo 'I am user bandit22' and create it's md5 sum
+									Use md5 sum to go to that directory and echo 'Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget'
+									What if we calculate the md5 sum of user bandit23 like " echo 'I am user bandit23' | md5sum", It give the md5 value of the text. 
+									now use it to read the content of /tmp directory 'cat /tmp/md5sum', It give next level password
 bandit24 - UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ (after following the same step previous, read /usr/bin/cronjob_bandit24.sh, it execute all the script inside /var/spool/bandit24 and after that delete these: let's go-
 									Make a directory on the /tmp `mkdir /tmp/ban`, visit `cd /tmp/ban`
 									Make a script file like: `touch script.sh`
 									execute command like `echo "cat /etc/bandit_pass/bandit24 > /tmp/ban/pass" > script.sh` It copy password from bandit_pass to our pass file first create the file.
 									`touch pass`, now give the permission to both file so that bandit24 execute and make changes to our files and enter the password because we are bandit23 `chmod 777 -R /tmp/ban`
 									Copy the script and paste to /var/spool/bandit24 by `cp /tmp/ban/script.sh /var/spool/bandit24`, wait for 1 minute to execute and delete the script
-									now check `cat /tmp/ban/pass` and there is your password. 
+									now check `cat /tmp/ban/pass` and there is your password.
 
 
