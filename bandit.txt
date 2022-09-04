@@ -1,55 +1,88 @@
 username 	password(how we find)
 bandit0 - bandit0(given)
-bandit1 - boJ9jbbUNNfktd78OOpsqOltutMc3MY1 (`ls` command there is a file called readme open via using `cat readme`)
-bandit2 - CV1DtqXWVFXTvM2F0k09SHz0YwRINYA9 (`ls` command there is a file called -, these used for argument in linux command so these are open via using `cat ./-`)
-bandit3 - UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK (`ls` command there is a file called spaces in filename, these file read via '' with filename like `cat 'spaces in filename'`)
-bandit4 - pIwrPrtPN36QITSp3EQaw936yaFoFgAB (`ls` command there is a directory called inhere and after `cd inhere` there is a hidden file which can be seen via `ls -la` command, now open via `cat .hidden`)
-bandit5 - koReBOKuIDDepwhWk7jZC0RTdopnAYKh (`ls` command there is a directory called inhere and after `cd inhere` there is multiple file here but only one contain password of next level and other have non readable data which can be seen via command `file ./-filexx`, one file have result like ASCII text, this is the file of password which can be read via `cat ./-filexx`
+bandit1 - NH2SXQwcBdpmTEzi3bvBHMM9H66vVXjL (`ls` command there is a file called readme open via using `cat readme`)
+bandit2 - rRGizSaX8Mk1RTb1CNQoXTcYZWU6lgzi (`ls` command there is a file called -, these used for argument in linux command so these are open via using `cat ./-`)
+bandit3 - aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG (`ls` command there is a file called spaces in filename, these file read via '' with filename like `cat 'spaces in filename'`)
+bandit4 - 2EW7BBsr6aMMoJ2HjW067dm8EgX26xNe (`ls` command there is a directory called inhere and after `cd inhere` there is a hidden file which can be seen via `ls -la` command, now open via `cat .hidden`)
+bandit5 - lrIWWI6bB37kxfiCQZqUdOIYfr6eEeqR (`ls` command there is a directory called inhere and after `cd inhere` there is multiple file here but only one contain password of next level and other have non readable data which can be seen via command `file ./-filexx`, one file have result like ASCII text, this is the file of password which can be read via `cat ./-filexx`
 
 you can play around with find command first it takes time to work 
 
-bandit6 - DXjZPULLxYr17uwoI01bNLQbtFemEgo7 (`ls` command there is a directory called inhere and after `cd inhere` there is multiple directory, now we need to extract one file which is not executable 1033 bytes and readble so we use find command like `find -type f -size 1033c ! -executable` it return only one result which is readble but very long file we can see its content using `head .filexx`)
-bandit7 - HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs (find a file using given condition like `find -type f -user bandit7 -group bandit6 -size 33c` it give multiple permission denied msg but one of the file isn't and that's the file you can see using `cat path_of_file`)
-bandit8 - cvX2JJa4CFALtqS87jk27qwqGhBM9plV (`ls` command give a file data.txt which is a long file, now according to suggestion we use command `grep` like `cat data.txt | grep millionth`)
-bandit9 - UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR (`ls` command give a file data.txt which is a long file, now according to suggestion we first use sort command with `cat data.txt | sort` to sort the sequence now in the same command we use uniq command to extract the unique line, full command like `cat data.txt | sort | uniq -u`)
-bandit10 - truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk (`ls` command give a file data.txt which is a long file, now according to suggestion we use strings command to print human readable text from this file and use grep command for extraact password with several '='charecter, our command like `strings data.txt | grep '='`)
-bandit11 - IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR (`ls` command give a file data.txt which is a long file, now according to suggestion this is a base64 encode text now we can decrypt this text using `cat data.txt | base64 -d` command)
-bandit12 - 5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu (here in data.txt file uses ROT13 encoding where each charecter is replaced via the next 13th charecter in sequence, now we can use `tr` command to translate to orignal form like this `cat data.txt | tr '[a-zA-Z]' '[n-za-mN-ZA-M]'`)
-bandit13 - 8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL (make what program want to do first-> mv /tmp/newfile 
-									  second -> cp /home/bandit12/data.txt /tmp/newfile
-									  third -> cat data.txt | xxd -r > data
-									  now check type of file type `file data`
-									 now if you get gzip format rename your file to `mv data data1.gz`  (this decrypt via `gzip -d data1.gz`)
-									     if this is bzip2 format `mv data1 data2.bz`   (this decrypt via `bzip2 -d data2.bz`)
-									 and if it is 'POSIX format' rename it `mv data2 data3.tar`     (this decrypt via `tar -xf data3.tar`)
-									 repeat this until `file data` command woun't give you result like this ASCII text read it via 'cat data'
-bandit14 - 4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e (we have given a ssh private key which we can use to logon to the bandit 14 in localhost and read its password, for this first use `ssh -i sshkey.private bandit14@localhost` you are loged in as bandit14, now we can see the password of the user like `cat /etc/bandit_pass/bandit14`)
-bandit15 - BfMYroe26WYalil77FoDi9qh59eK5xNr (because we have given to connect on port 30000, but we have no password or ssh key to connect so we try some other method to connect to remote server, and this can be done via telnet, we use the command like `telnet localhost 30000` and enter current password of bandit14 we have presented next level password)
-bandit16 - cluFn7wTiGryunymYOu4RcffSxQluehd (now we have to connect using ssl encryption so we use openssl command to connect to server, you can read about it how to connect to server using openssl, but now we use command like `openssl s_client -connect localhost:30001` and enter current user password we get next level password)
-bandit17 - xLYVMN9WE5zQ5vHacb0sZEVqbrp7nBTn (because first we need to find out what are port listen on ssl we use nmap and then openssl on that port like------
-									nmap -A -p31000-32000 localhost (It show 5 port from which one service is ssl/unknown that's the port)
-									now 'openssl s_client -connect localhost@31960' now enter currnet user password
-									This give the ssh private key of next user which we copy from -----BEGIN RSA PRIVATE KEY-----
- 									to -----END RSA PRIVATE KEY-----, now go to 'cd /tmp' and use 'nano ssh_key' now paste that key here save it with ctrl+o and exit out by ctrl+x, now change permission like `chmod 400 ssh_key`
-									now use ssh ------- 'ssh -i ssh_key bandit17@localhost'--------- read next user password via 'cat /etc/bandit_pass/bandit17')
-bandit18 - kfBf3eYk5BPBRzwjqutbbfE887SVc5Yd (we have to find that line which is changed in the password.new from password.old, we use 'diff' tool to find the diffrence like `diff password.old password.new` and the second line on this is our password which comes from the password.new file, you can also double check by submit this to bandit18 user and it say bye bye) 
-bandit19 - IueksS7Ubh8G3DCwVzrTd8rAVOwq3M5x (because someone has modified .bashrc to log you out when you log in with SSH, so we didn't load the terminal so that we can't logout directly, for that we load another shell in the ssh command, like `ssh bandit.labs.overthewire.org -p 2220 -l bandit18 /bin/sh` enter the password of bandit18 enter ls, their is a file readme, now enter `cat readme')
+bandit6 - P4L4vucdmLnm8I7Vl7jG1ApGSfjYKqJU (`ls` command there is a directory called inhere and after `cd inhere` there is multiple directory, now we need to extract one file which is not executable 1033 bytes and readble so we use find command like `find -type f -size 1033c ! -executable` it return only one result which is readble but very long file we can see its content using `head .filexx`)
+bandit7 - z7WtoNQU2XfjmMtWA8u5rN4vzqu4v99S (find a file using given condition like `find / -type f -user bandit7 -group bandit6 -size 33c` it give multiple permission denied msg but one of the file isn't and that's the file you can see using `cat path_of_file`)
+bandit8 - TESKZC0XvTetK0S9xNwm25STk5iWrBvP (`ls` command give a file data.txt which is a long file, now according to suggestion we use command `grep` like `cat data.txt | grep millionth`)
+bandit9 - EN632PlfYiZbn3PhVK3XOGSlNInNE00t (`ls` command give a file data.txt which is a long file, now according to suggestion we first use sort command with `cat data.txt | sort` to sort the sequence now in the same command we use uniq command to extract the unique line, full command like `cat data.txt | sort | uniq -u`)
+bandit10 -G7w8LIi6J3kTb8A7j9LgrywtEUlyyp6s (`ls` command give a file data.txt which is a long file, now according to suggestion we use strings command to print human readable text from this file and use grep command for extraact password with several '='charecter, our command like `strings data.txt | grep '='`)
+bandit11 - 6zPeziLdR2RKNdNYFNb6nVCKzphlXHBM (`ls` command give a file data.txt which is a long file, now according to suggestion this is a base64 encode text now we can decrypt this text using `cat data.txt | base64 -d` command)
+bandit12 - JVNBBFSmZwKKOP0XbFXOoW8chDz5yVRv (here in data.txt file uses ROT13 encoding where each charecter is replaced via the next 13th charecter in sequence, now we can use `tr` command to translate to orignal form like this `cat data.txt | tr '[a-zA-Z]' '[n-za-mN-ZA-M]'`)
+bandit13 - wbWdlBxEir4CaE8LaPhauuOo6pwRmrDw (make what program want to do first-> mv /tmp/newfile 
+									  -> second -> cp /home/bandit12/data.txt /tmp/newfile
+									  -> third -> cat data.txt | xxd -r > data
+									  -> now check type of file type `file data`
+									 -> now if you get gzip format rename your file to `mv data data1.gz`  (this decrypt via `gzip -d data1.gz`)
+									   ->   if this is bzip2 format `mv data1 data2.bz`   (this decrypt via `bzip2 -d data2.bz`)
+									 -> and if it is 'POSIX format' rename it `mv data2 data3.tar`     (this decrypt via `tar -xf data3.tar`)
+									->  repeat this until `file data` command woun't give you result like this ASCII text read it via 'cat data'
+bandit14 - fGrHPx402xGC7U7rXKDaxiWFTOiF0ENq (we have given a ssh private key which we can use to logon to the bandit 14 in localhost and read its password, for this first use `ssh -i sshkey.private bandit14@localhost -p 2220` you are loged in as bandit14, now we can see the password of the user like `cat /etc/bandit_pass/bandit14`)
+bandit15 - jN2kgmIXJ6fShzhT2avhotn4Zcka6tnt (because we have given to connect on port 30000, but we have no password or ssh key to connect so we try some other method to connect to remote server, and this can be done via telnet, we use the command like `telnet localhost 30000` and enter current password of bandit14 we have presented next level password)
+bandit16 - JQttfApK4SeyHwDlI9SXGR50qclOAil1 (now we have to connect using ssl encryption so we use openssl command to connect to server, you can read about it how to connect to server using openssl, but now we use command like `openssl s_client -connect localhost:30001` and enter current user password we get next level password)
+bandit17 - VwOSWtCA7lRKkTfbr2IDh6awj9RNZM5e (because first we need to find out what are port listen on ssl we use nmap and then openssl on that port like------
+									-> nmap -A -p31000-32000 localhost (It show 5 port from which one service is ssl/unknown that's the port)
+									-> now 'openssl s_client -connect localhost@31960' now enter currnet user password
+									-> This give the ssh private key of next user which we copy from -----BEGIN RSA PRIVATE KEY-----
+ 									-> to -----END RSA PRIVATE KEY-----, now go to 'cd /tmp' and use 'nano ssh_key' now paste that key here save it with ctrl+o and exit out by ctrl+x, now change permission like `chmod 400 ssh_key`
+									-> now use ssh ------- 'ssh -i ssh_key bandit17@localhost'--------- read next user password via 'cat /etc/bandit_pass/bandit17')
+bandit18 - hga5tuuCLF6fFzUpnagiMN8ssu9LFrdg (we have to find that line which is changed in the password.new from password.old, we use 'diff' tool to find the diffrence like `diff password.old password.new` and the second line on this is our password which comes from the password.new file, you can also double check by submit this to bandit18 user and it say bye bye) 
+bandit19 - awhqfNnAbc1naukrpqDYcF95h7HoMTrC (because someone has modified .bashrc to log you out when you log in with SSH, so we didn't load the terminal so that we can't logout directly, for that we load another shell in the ssh command, like `ssh bandit.labs.overthewire.org -p 2220 -l bandit18 /bin/sh` enter the password of bandit18 enter ls, their is a file readme, now enter `cat readme')
 ------------------------------------Also remind that SSH does not just allows us to log into a machine remotely, but it also allows remote execution of commands by adding the commands after the common SSH expression like `ssh bandit.labs.overthewire.org -p 2220 -l bandit18 cat readme`-----------------------------------
-bandit20 - GbKksEFF4yrVs6il55v6gwY5aVje5f0j (Here we have assign setuid in that file, which is useful for executing the file as bandit20 user within bandit19 group, When the setuid bit is used it does not run with the privileges of the user who launched it, but with that of the file owner instead, so we run like `./bandit20-do cat /etc/bandit_pass/bandit20`)
-bandit21 - gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr (First we have to make a connection with the bandit20 server with netcat using command like "echo -n 'password of bandit20' | nc -l -p 12345 &" this run on background and send the password of bandit20 to server once we connect on the same port using given setuid on 'suconnect', so command is like "suconnect 12345" and you've given next password)   
-bandit22 - Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI (go to `cd /etc/cron.d/` there is multiple cron jobs are avilable, but for us bandit22 is useful, let read its content `cat cronjob_bandit22`, there is shell script running, let's see what's inside of those, `cat /usr/bin/cronjob_bandit22.sh`, now it changes the /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv permission, let's look on it, what it contain 'cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv', we get next level password)0
-bandit23 - jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n (go to `cd /etc/cron.d/` there is multiple cron jobs are avilable, but for us bandit23 is useful, let read its content `cat cronjob_bandit23`, there is shell script running, let's see what's inside of those, `cat /usr/bin/cronjob_bandit22.sh`, let's break it down-
-									First it take user name from 'whoami' command
-									Then it echo 'I am user bandit22' and create it's md5 sum
-									Use md5 sum to go to that directory and echo 'Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget'
-									What if we calculate the md5 sum of user bandit23 like " echo 'I am user bandit23' | md5sum", It give the md5 value of the text. 
-									now use it to read the content of /tmp directory 'cat /tmp/md5sum', It give next level password
-bandit24 - UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ (after following the same step previous, read /usr/bin/cronjob_bandit24.sh, it execute all the script inside /var/spool/bandit24 and after that delete these: let's go-
-									Make a directory on the /tmp `mkdir /tmp/ban`, visit `cd /tmp/ban`
-									Make a script file like: `touch script.sh`
-									execute command like `echo "cat /etc/bandit_pass/bandit24 > /tmp/ban/pass" > script.sh` It copy password from bandit_pass to our pass file first create the file.
-									`touch pass`, now give the permission to both file so that bandit24 execute and make changes to our files and enter the password because we are bandit23 `chmod 777 -R /tmp/ban`
-									Copy the script and paste to /var/spool/bandit24 by `cp /tmp/ban/script.sh /var/spool/bandit24`, wait for 1 minute to execute and delete the script
-									now check `cat /tmp/ban/pass` and there is your password.
+bandit20 - VxCazJaVykI6W36BkBU0mJTCM8rR95XT (Here we have assign setuid in that file, which is useful for executing the file as bandit20 user within bandit19 group, When the setuid bit is used it does not run with the privileges of the user who launched it, but with that of the file owner instead, so we run like `./bandit20-do cat /etc/bandit_pass/bandit20`)
+bandit21 - NvEJF7oVjkddltPSrdKEFOllh9V1IBcq (First we have to make a connection with the bandit20 server with netcat using command like "echo -n 'password of bandit20' | nc -l -p 12345 &" this run on background and send the password of bandit20 to server once we connect on the same port using given setuid on 'suconnect', so command is like "./suconnect 12345" and you've given next password)   
+bandit22 - WdDozAdTM2z9DiFEQ2mGlwngMfj4EZff (go to `cd /etc/cron.d/` there is multiple cron jobs are avilable, but for us bandit22 is useful, let read its content `cat cronjob_bandit22`, there is shell script running, let's see what's inside of those, `cat /usr/bin/cronjob_bandit22.sh`, now it changes the /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv permission, let's look on it, what it contain 'cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv', we get next level password)0
+bandit23 - QYw0Y2aiA672PsMmh9puTQuhoz8SyR2G (go to `cd /etc/cron.d/` there is multiple cron jobs are avilable, but for us bandit23 is useful, let read its content `cat cronjob_bandit23`, there is shell script running, let's see what's inside of those, `cat /usr/bin/cronjob_bandit22.sh`, let's break it down-
+									-> First it take user name from 'whoami' command
+									-> Then it echo 'I am user bandit22' and create it's md5 sum
+									-> Use md5 sum to go to that directory and echo 'Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget'
+									-> What if we calculate the md5 sum of user bandit23 like " echo 'I am user bandit23' | md5sum", It give the md5 value of the text. 
+									-> now use it to read the content of /tmp directory 'cat /tmp/md5sum', It give next level password
+bandit24 - VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar (after following the same step previous, read /usr/bin/cronjob_bandit24.sh, it execute all the script inside /var/spool/bandit24 and after that delete these: let's go-
+									-> Make a directory on the /tmp `mkdir /tmp/ban`, visit `cd /tmp/ban`
+									-> Make a script file like: `touch script.sh`
+									-> execute command like `echo "cat /etc/bandit_pass/bandit24 > /tmp/ban/pass" > script.sh` It copy password from bandit_pass to our pass file first create the file.
+									-> `touch pass`, now give the permission to both file so that bandit24 execute and make changes to our files and enter the password because we are bandit23 `chmod 777 -R /tmp/ban`
+									-> Copy the script and paste to /var/spool/bandit24 by `cp /tmp/ban/script.sh /var/spool/bandit24/foo`, wait for 1 minute to execute and delete the script
+									-> now check `cat /tmp/ban/pass` and there is your password.
+bandit25 - p7TaowMYrmu23Ol8hiZh9UvD0O9hpx8d (Now this is some tricky so i've made a Medium post, you can see all about this in here "https://vijaynariyal21.medium.com/bandit-24-25-bandit-24-c47aa44673b1")
+bandit26 - c7GvcKlw9mC7aUQaPx7nwFstuAIBw1o1 (Now we have given an ssh key, so we can login to host via ssh from `ssh -i bandit26.sshkey bandit26@localhost`, but it's getting out to me from shell, so i check the what shell it's running.so i type `grep bandit26 /etc/passwd` and it show /usr/bin/showtext, which i don't know what the fu*k is this,
+									-> so I checked google about that and we have come across we have to narrow down our screen so that we can intract with the shell
+									-> so I narrow the size of terminal, and then type `ssh -i bandit26.sshkey bandit26@localhost`, it goes on 'vi' editor
+									-> More command is running, so I type 'v', and it goes to command mode so i type 'esc' button on that then type `:e /etc/bandit_pass/bandit26`
+									-> we can resize the terminal now for better look it give the next level password
+									-> press :!q to exit out
+bantit27 - YnQpBuifNMas1hcUFk70ZmqkhUU2EuaS (because logging with the bandit26 user kick out us,Now as we did previous make terminal smaller and then ssh into bandit27 and press 'v' now press shift+: and type ':set shell=/bin/bash'hit enter now again press shift+: and enter 'shell' this give you an intractive shell, now there is executable 'bandit27-do' and hit enter and type following command `./bandit27-do cat /etc/bandit_pass/bandit27` there is your passoword.
+bandit28 - AVanL161y9rsbcJIsFHuw35rjaOM19nR (for this level you have some knowledge about how to clone a reposetry, first ssh to bandit27, now go to `cd /tmp` create a dir here `mkdir tt`, navigate to tt `cd tt`, now clone `git clone ssh://bandit27-git@localhost/home/bandit27-git/repo`, password is same as password of bandit27, navigate to `cd repo`, there is a file now go to 'cat README` there is your password.)
+					     NOTE: if you get the error on cloning reposetry try on 2220 port, `git clone ssh://bandit27-git@localhost:2220/home/bandit27-git/repo' 
+bandit29 - tQKvmcwNYcFS6vmPHIUSI3ShmsrQZK8S (we have cloned the website 'git clone ssh://bandit27-git@localhost/home/bandit27-git/repo' and read the content of README.md, which contain password format like: password xxxxxxxxx, Now to find the passwprd of next level we see if we have any commit on that repo or not for that:
+									-> first type command `git log`
+									-> It show they fixed the info leak for that we check its previous commit 
+									-> `git show 43032edb2fb868dea2ceda9cb3882b2c336c09ec` (In case you have different commit change it)
+									-> Now there is username and password we changed.)
+bandit30 - xbhV3HpNGlTIdnjUrdAlPzc2L6y9EOnS (we cloned the repo and this time it say  '<no passwords in production!>', means there is no password in this branch, so we checked another branches to find out the password. For that:
+									-> First type `git branch -a`
+									-> Now check there is different branches and we checked each one to find File README.md in each branch and see there is password or not for next level. by `git switch branch_name`
+									-> fortunately I found a branch 'dev' which have README.md and there is our password.
+									-> 'git switch dev'
+									->  cat README.md)
+bandit31 - OoffzGDlzhAlerFJ2cAiz1D41JW1Mhmt (we cloned the repo but that time nothing helpful found on that file, now see what we can do:: 'Git tagging is a way to mark specific points in the history of the repository. One example would be to mark release points of the software':
+									-> so I checked the tagging, via- `git tag`
+									-> there is a tag called 'secret', so I type `git show secret` and it show the password for next level)
+bandit32 - rmCBvG56y58BXzv98yZGdO7ATVL5dW8y (Here we have to push a file in that repo with content 'May I come in?' for that follow the steps:
+									-> `echo 'May I come in?' > file.txt`
+									-> `git add -f file.txt` (because it disallow to add .txt files in repo)
+									-> `git commit -a`    (Open a file in nano add anything or skip, now save ctrl+o and exit ctrl+x)
+									-> `git push -u origin master` (Now enter the password of bandit31 and hit enter you see the password)).
 
-
+bandit33 - odHo63fHiFqcWWJG9rLiLDtPm45KzUKy (This is some new 'sh' shell which convert the given command to upper case and not support any linux command, so to know the password of next user we need to find the way to interact with shell, for that :
+									-> The one thing in Linux that is uppercase is variables. Specifically, the variable $0 has a reference to a shell. You can see this with echo $0 on your machine. Not in this.
+									-> now you have interactive sh shell. 
+									-> Type 'whoami' you are bandit33,so you easily see the password for next level.
+									-> `cat /etc/bandit_pass/bandit33`)
